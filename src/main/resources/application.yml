@@ -1,0 +1,32 @@
+server:
+ port: 8088
+spring:
+ datasource:
+     driver-class-name: com.mysql.jdbc.Driver
+     url: jdbc:mysql://127.0.0.1:3306/wk-server
+     username: wk
+     password: czyczy
+ jpa:
+     hibernate:
+       ddl-auto: update
+     show-sql: true
+ jackson:
+     serialization:
+       INDENT_OUTPUT: true
+       WRITE_DATES_AS_TIMESTAMPS: false
+     time-zone: GMT+8
+jwt:
+   tokenHeader: Authorization
+   secret: key-wk-server
+   expiration: 604800
+   tokenHead: "Bearer "
+   route:
+     authentication:
+       path: auth
+       refresh: refresh
+       register: "auth/register"
+
+file:
+   upload:
+     directory: "/Users/wkchen/Desktop/"
+     base: "image_"
