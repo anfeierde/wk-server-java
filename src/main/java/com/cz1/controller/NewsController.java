@@ -1,12 +1,14 @@
 package com.cz1.controller;
 
-import com.cz1.request.NewsRequest;
+import com.cz1.domain.News;
 import com.cz1.service.impl.NewsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * Created by wkchen on 2017/4/13.
@@ -18,10 +20,12 @@ public class NewsController {
     @Autowired
     private NewsServiceImpl newsService;
 
+
     @PostMapping
-    public ResponseEntity<?> postNews(@RequestPart("info") NewsRequest request,
-                                      @RequestPart("file") MultipartFile file) {
-        return ResponseEntity.ok(newsService.postNews(request,file));
+    public ResponseEntity<?> postNews(@RequestPart("info") String request,
+                                      @RequestPart("file") MultipartFile multipart) throws IOException {
+        News news = newsService.postNews(request, multipart);
+        return ResponseEntity.ok(news);
     }
 
     @GetMapping(value = "/{id}")

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by wkchen on 2017/4/13.
@@ -22,11 +23,11 @@ public class News {
     private Long id;
 
     @NotNull
-    @Size(min = 4,max = 50)
+    @Size(min = 4, max = 50)
     private String title;
 
     @NotNull
-    @Size(min = 8,max =100)
+    @Size(min = 8, max = 100)
     private String content;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -36,17 +37,19 @@ public class News {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at;
 
+    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated_at;
 
     @JsonIgnore
     private int status;
 
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    @JsonIgnore
-    private User user;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "news", fetch = FetchType.EAGER)
+    private Set<Image> images;
 
+    public News() {
+
+    }
 
     public Long getId() {
         return id;
@@ -104,12 +107,11 @@ public class News {
         this.status = status;
     }
 
-    public User getUser() {
-        return user;
+    public Set<Image> getImages() {
+        return images;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setImages(Set<Image> images) {
+        this.images = images;
     }
-
 }
